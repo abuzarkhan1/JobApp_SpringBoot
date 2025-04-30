@@ -1,9 +1,8 @@
 package com.abuzar.jobapp.job.Controller;
 
 import com.abuzar.jobapp.job.Entity.Job;
+import com.abuzar.jobapp.job.Service.JobService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,16 +10,22 @@ import java.util.List;
 @RequestMapping("/jobs")
 public class JobController {
 
-    private List<Job> jobs = new ArrayList<>();
+
+    private JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
 
     @GetMapping
     public List<Job> findAll(){
-        return jobs;
+
+        return jobService.findAll();
     }
 
     @PostMapping
     public String createJob(@RequestBody Job job){
-        jobs.add(job);
+        jobService.createJob(job);
         return "Job created successfully";
     }
 
