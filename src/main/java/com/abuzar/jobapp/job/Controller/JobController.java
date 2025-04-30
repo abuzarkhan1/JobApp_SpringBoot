@@ -29,4 +29,13 @@ public class JobController {
         return "Job created successfully";
     }
 
+    @GetMapping("/{id}")
+    public Job getJobById(@PathVariable Long id){
+        Job job = jobService.getJobById(id);
+        if (job == null) {
+            throw new RuntimeException("Job not found with id: " + id);
+        }
+        return job;
+    }
+
 }
