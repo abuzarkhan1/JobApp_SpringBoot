@@ -42,5 +42,21 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
+    @Override
+    public boolean deleteCompany(Long id) {
+        Optional<Company> companyOptional = companyRepository.findById(id);
+        if (companyOptional.isPresent()) {
+            Company company = companyOptional.get();
+            List<Job> jobs = company.getJobs();
+            for (Job job : jobs) {
+                job.setCompany(null);
+            }
+            companyRepository.delete(company);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
