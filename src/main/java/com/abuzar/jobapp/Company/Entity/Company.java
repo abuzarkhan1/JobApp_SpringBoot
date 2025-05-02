@@ -1,6 +1,7 @@
 package com.abuzar.jobapp.Company.Entity;
 
 import com.abuzar.jobapp.job.Entity.Job;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public class Company {
     private String name;
     private String Description;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
     private List<Job> jobs;
 
 
