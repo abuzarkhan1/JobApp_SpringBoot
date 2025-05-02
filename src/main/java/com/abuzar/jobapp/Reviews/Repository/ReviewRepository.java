@@ -1,0 +1,10 @@
+package com.abuzar.jobapp.Reviews.Repository;
+
+import com.abuzar.jobapp.Reviews.Entity.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ReviewRepository extends JpaRepository<Review , Long> {
+    List<Review> findByCompanyId(Long companyId);
+}

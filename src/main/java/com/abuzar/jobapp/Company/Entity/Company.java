@@ -1,5 +1,6 @@
 package com.abuzar.jobapp.Company.Entity;
 
+import com.abuzar.jobapp.Reviews.Entity.Review;
 import com.abuzar.jobapp.job.Entity.Job;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -19,8 +20,19 @@ public class Company {
     @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
     private List<Job> jobs;
 
+    @OneToMany(mappedBy = "company" , cascade = CascadeType.ALL)
+    private List<Review> reviews;
+
 
     public Company() {
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public Long getId() {
