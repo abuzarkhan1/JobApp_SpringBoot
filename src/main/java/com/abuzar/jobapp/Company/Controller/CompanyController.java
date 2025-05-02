@@ -2,6 +2,7 @@ package com.abuzar.jobapp.Company.Controller;
 
 import com.abuzar.jobapp.Company.Entity.Company;
 import com.abuzar.jobapp.Company.Service.CompanyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
 
 
@@ -27,9 +28,15 @@ public class CompanyController {
     public ResponseEntity<String> updateCompany(@PathVariable  Long id, @RequestBody Company company) {
         boolean isUpdated = companyService.updateCompany(company, id);
         if (isUpdated) {
-            return ResponseEntity.ok("Company updated successfully");
+            return new ResponseEntity<>("Company updated successfully", HttpStatus.OK);
         } else {
-            return ResponseEntity.status(404).body("Company not found");
+            return new ResponseEntity<>("Company not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createCompany(@RequestBody Company company) {
+        companyService.createCompany(company);
+        return new ResponseEntity<>("Company created successfully", HttpStatus.CREATED);
     }
 }
