@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/companies/{companyId}")
 public class ReviewController {
 
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
@@ -49,6 +49,16 @@ public class ReviewController {
     public ResponseEntity<String> updateReview(@PathVariable Long companyId, @PathVariable Long reviewId, @RequestBody Review review) {
         reviewService.updateReview(companyId, reviewId, review);
         return new ResponseEntity<>("Review updated successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/reviews/{reviewId}")
+    public ResponseEntity<String> deleteReview(@PathVariable Long companyId, @PathVariable Long reviewId) {
+        boolean isDeleted = reviewService.deleteReview(companyId, reviewId);
+        if (isDeleted) {
+            return new ResponseEntity<>("Review deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Review not found", HttpStatus.NOT_FOUND);
+        }
     }
 
 }
